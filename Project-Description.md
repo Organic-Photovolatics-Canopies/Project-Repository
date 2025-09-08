@@ -1,4 +1,8 @@
-# OMID USA OPV
+# OMID USA - Organic Photovoltaics Canopies
+
+## Project Repo
+
+[GitHub](https://github.com/Organic-Photovolatics-Canopies/Project-Repository)
 
 ## Project Topic Area
 
