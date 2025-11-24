@@ -14,6 +14,12 @@ SET @thr_gap_beta  = 0.03;
 
 SET @thr_dipmom    = 0.15;   -- conformer-level noise allowed
 
+-- How much we trust large gap (onset_norm) vs weak absorption
+SET @w_onset       = 0.7;   -- weight for onset_norm
+SET @w_absorption  = 0.3;   -- weight for (1 - absorption_strength_norm)
+
+-- Min PCE for "useful" OPVs (optional)
+SET @pce_min       = 3.0;   -- tweak later
 
 /* ----------------------------------------------------------
    2. Per-molecule stats: averages & variances by mol_graph_id
@@ -209,57 +215,83 @@ GROUP BY mol_graph_id;
 
 
 /* ----------------------------------------------------------
-   9. Absorption-related features using CLEANED calc table
-      + cleaning filters
+   9. Absorption-related features + transparency proxy
    ---------------------------------------------------------- */
 
 CREATE OR REPLACE VIEW v_absorption_features AS
+WITH base AS (
+  SELECT
+    g.id           AS mol_graph_id,
+    g.SMILES_str,
+    g.n_heavyatoms,
+    g.mass,
+
+    -- Cleaned gaps
+    c.e_gap_min_avg   AS e_gap_min,
+    c.e_gap_alpha_avg AS e_gap_alpha,
+    c.e_gap_beta_avg  AS e_gap_beta,
+
+    -- Scharber metrics
+    s.jsc_avg AS jsc,
+    s.pce_avg AS pce,
+
+    -- Spin asymmetry
+    ABS(c.e_gap_alpha_avg - c.e_gap_beta_avg) AS gap_asymmetry
+  FROM data_molgraph g
+  JOIN data_calcqcset1_clean c ON g.id = c.mol_graph_id
+  JOIN v_scharber_agg        s ON g.id = s.mol_graph_id
+  WHERE
+    -- require Scharber
+    s.pce_avg BETWEEN 0 AND 40
+    AND s.jsc_avg BETWEEN 0 AND 30
+    -- no badly broken spin symmetry
+    AND ABS(c.e_gap_alpha_avg - c.e_gap_beta_avg) < 0.2
+    -- optional: only somewhat functional devices
+    AND s.pce_avg >= @pce_min
+)
 SELECT
-  g.id AS mol_graph_id,
-  g.SMILES_str,
-  g.n_heavyatoms,
-  g.mass,
+  b.*,
 
-  -- Use averaged, cleaned gaps from data_calcqcset1_clean
-  c.e_gap_min_avg   AS e_gap_min,
-  c.e_gap_alpha_avg AS e_gap_alpha,
-  c.e_gap_beta_avg  AS e_gap_beta,
+  -- Normalized Jsc across this OPV-like set
+  (b.jsc - MIN(b.jsc) OVER()) /
+  NULLIF(MAX(b.jsc) OVER() - MIN(b.jsc) OVER(), 0) AS absorption_strength_norm,
 
-  -- Aggregated Scharber metrics
-  s.jsc_avg AS jsc,
-  s.pce_avg AS pce,
+  -- Normalized onset (0..1)
+  (b.e_gap_min - MIN(b.e_gap_min) OVER()) /
+  NULLIF(MAX(b.e_gap_min) OVER() - MIN(b.e_gap_min) OVER(), 0) AS onset_norm,
 
-  -- Derived features
-  ABS(c.e_gap_alpha_avg - c.e_gap_beta_avg) AS gap_asymmetry,
+  -- Transparency proxy (raw, before normalization):
+  -- high when onset high AND absorption_strength low
+  (
+      @w_onset      * (
+          (b.e_gap_min - MIN(b.e_gap_min) OVER()) /
+          NULLIF(MAX(b.e_gap_min) OVER() - MIN(b.e_gap_min) OVER(), 0)
+      )
+    + @w_absorption * (
+          1 - (
+              (b.jsc - MIN(b.jsc) OVER()) /
+              NULLIF(MAX(b.jsc) OVER() - MIN(b.jsc) OVER(), 0)
+          )
+      )
+  ) AS transparency_raw
 
-  -- Normalized Jsc across all molecules with Jsc
-  (s.jsc_avg - MIN(s.jsc_avg) OVER()) /
-  NULLIF(MAX(s.jsc_avg) OVER() - MIN(s.jsc_avg) OVER(), 0) AS absorption_strength_norm,
-
-  -- Normalized onset (gap_min) across all molecules with gaps
-  (c.e_gap_min_avg - MIN(c.e_gap_min_avg) OVER()) /
-  NULLIF(MAX(c.e_gap_min_avg) OVER() - MIN(c.e_gap_min_avg) OVER(), 0) AS onset_norm
-
-FROM data_molgraph g
-JOIN data_calcqcset1_clean c
-       ON g.id = c.mol_graph_id
-JOIN v_scharber_agg s
-       ON g.id = s.mol_graph_id
-WHERE
-  -- require valid Scharber entry
-  s.mol_graph_id IS NOT NULL
-  -- physically reasonable Scharber outputs
-  AND s.pce_avg BETWEEN 0 AND 40
-  AND s.jsc_avg BETWEEN 0 AND 30
-  -- no badly broken spin symmetry
-  AND ABS(c.e_gap_alpha_avg - c.e_gap_beta_avg) < 0.2;
-
+FROM base b;
 
 /* ----------------------------------------------------------
-   10. Final GNN dataset view with binary transparency label
+   10. Final dataset view for GNN
+       - Regression: transparency_pct (0..100)
+       - Plus raw/z-scored targets for experiments
    ---------------------------------------------------------- */
 
 CREATE OR REPLACE VIEW v_gnn_dataset AS
+WITH t AS (
+  SELECT
+    v.*,
+    -- Normalize transparency_raw into [0,1]
+    (transparency_raw - MIN(transparency_raw) OVER()) /
+    NULLIF(MAX(transparency_raw) OVER() - MIN(transparency_raw) OVER(), 0) AS transparency_norm
+  FROM v_absorption_features v
+)
 SELECT
     mol_graph_id,
     SMILES_str,
@@ -273,9 +305,15 @@ SELECT
     gap_asymmetry,
     absorption_strength_norm,
     onset_norm,
+    transparency_raw,
+    transparency_norm,
+    transparency_norm * 100.0 AS transparency_pct,  -- << YOUR main regression target
+
+    -- Optional binary label: "high transparency"
     CASE
-        WHEN onset_norm >= 0.5 THEN 1  -- ≥ 50% transparent
+        WHEN transparency_norm >= 0.75 THEN 1   -- top 25% transparent
         ELSE 0
-    END AS y_transparent
-FROM v_absorption_features;
+    END AS y_transparent_high
+
+FROM t;
 -- End of pipeline.sql
