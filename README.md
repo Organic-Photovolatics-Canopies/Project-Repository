@@ -27,7 +27,11 @@
    - [Om Rajesh Jadhav](./Member%20Bios/Om%20Rajesh%20Jadhav.md)
    - [Ido Gal](./Member%20Bios/Ido%20Gal.md)
    - [Toan Nham](./Member%20Bios/Toan%20Nham.md)
-9. Appendix
+9. Budget
+   - This project has not incurred any expenses so far.
+10. Appendix
+
+- [Harvard Clean Energy Project Research](./HCEPDB/README.md)
 
 This section provides references, citations, links to code repositories, meeting
 notes, and evidence of work for each team member.
