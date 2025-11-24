@@ -60,6 +60,26 @@ Each member will add their own contributions individually below.
     - Writing SQL and Python scripts to process and validate the data (see
       `pipeline.sql`)
     - Documenting the process and results in progress reports
+- **Dhruv:**
+  - Work in progress is documented in the `pyg-exploration/` folder, including:
+    - PyTorch Geometric implementation and baseline analysis
+      ([pyg_tutorial_complete.py](pyg-exploration/pyg_tutorial_complete.py), [outputs.pdf](pyg-exploration/outputs.pdf))
+    - Baseline model visualizations and performance metrics
+      ([baseline_predictions.png](pyg-exploration/baseline_predictions.png), [feature_importance.png](pyg-exploration/feature_importance.png), [transparency_distribution.png](pyg-exploration/transparency_distribution.png))
+    - Data files and preprocessed datasets (e.g., `transparent_opv_candidates.csv`, `compound_quality_metrics.csv`, `compound_smiles_sample.csv`)
+  - Researched PyTorch Geometric for molecular property prediction, performed baseline analysis, and prepared the graph neural network implementation for the OPV transparency prediction task. This involved:
+    - Researching graph neural network architectures for molecular property prediction and understanding GCN layers, message passing, and molecular graph representations (see `pyg_tutorial_complete.py`)
+    - Setting up development environment with PyTorch, PyTorch Geometric, and RDKit chemistry library
+    - Implementing baseline model achieving R² = 0.4335, RMSE = 0.7259 using spectral features
+    - Writing 300+ lines of code for SMILES-to-graph conversion, GCN architecture, and training loops (see `pyg_tutorial_complete.py`)
+    - Documenting the process and results in technical reports
+
+**References and Citations:**
+
+- PyTorch Geometric Documentation: [https://pytorch-geometric.readthedocs.io](https://pytorch-geometric.readthedocs.io)
+- Baseline Model Analysis: See `pyg-exploration/outputs.pdf`
+- PyG Implementation Pipeline: See `pyg-exploration/pyg_tutorial_complete.py`
+- Code Repository: [Project GitHub](https://github.com/Organic-Photovoltaics-Canopies/Project-Repository)
 
 **References and Citations:**
 
