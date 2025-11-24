@@ -10,6 +10,6 @@
 6. PPT Slideshow
 7. Self-Assessment Essays
 8. Professional Biographies
-   - [Milo Ginn](./Member\ Bios/Milo\ Ginn.md)
+   - [Milo Ginn](./Member%20Bios/Milo%20Ginn.md)
 9. Budget
 10. Appendix
