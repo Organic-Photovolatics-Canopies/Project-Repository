@@ -38,6 +38,7 @@
 8. Professional Biographies
 9. Professional Biographies
    - [Milo Ginn](./Member%20Bios/Milo%20Ginn.md)
+   - [Dhruv Singh](https://github.com/Organic-Photovolatics-Canopies/Project-Repository/blob/main/Member%20Bios/Dhruv_Pratap_Singh.md)
 10. Appendix
 
 This section provides references, citations, links to code repositories, meeting notes, and evidence of work for each team member.
