@@ -10,38 +10,13 @@
    - Ido Gal
    - Toan Nham
 
-2. Project Description (Assignment #2) See:
-   [Project-Description.md](./Project-Description.md) A summary of the project
-   scope, goals, and team members.
+2. [Project Description](./Project-Description.md)
 
 3. User Stories and Design Diagrams (Assignment #4)
-   - **User Stories:** [User_Stories.md](./User_Stories.md) Detailed user
-     stories for all stakeholders.
-
-   - **Design Diagrams:**
-     - **Level 0: Context Diagram**
-       ![Context Diagram](./Design_Diagrams/D0%20-%20Context%20Diagram.png)
-       _Description:_ Shows the overall system context, including the user,
-       fabrication process, and design query flow. Conventions: UML actor for
-       user, rounded rectangles for processes. Purpose: To illustrate the main
-       external interactions with the OPV design system.
-
-     - **Level 1: Container Diagram**
-       ![Container Diagram](./Design_Diagrams/D1%20-%20Container%20Diagram.png)
-       _Description:_ Breaks down the system into main containers: Front End
-       (Web App), OPV Design Tool, and their interactions. Conventions: UML
-       actor for user, containers as rounded rectangles. Purpose: To show how
-       the user interacts with the web app and how prompts and responses flow
-       through the system.
-
-     - **Level 2: Component Diagram**
-       ![Component Diagram](./Design_Diagrams/D2%20-%20Component%20Diagram.png)
-       _Description:_ Details the internal components such as Materials List,
-       Graph Neural Network, and their data flows (e.g., absorption curves,
-       generated design). Conventions: Cylinders for data stores, rounded
-       rectangles for components. Purpose: To describe the internal structure
-       and data flow of the OPV design model.
+   - [User Stories](./User%20Stories.md)
+   - [Design Diagrams](./Design%20Diagrams/README.md)
 4. Project Tasks and Timeline
+   - [Task List](./Task%20List.md)
 5. ABET Concerns
 6. [PPT Presentation](./Fall%20Design%20Presentation.pptx)
 7. Self-Assessment Essays
