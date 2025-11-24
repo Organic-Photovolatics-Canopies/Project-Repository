@@ -9,15 +9,13 @@
    - Dhruv Singh
    - Ido Gal
    - Toan Nham
-
 2. [Project Description](./Project-Description.md)
-
-3. User Stories and Design Diagrams (Assignment #4)
+3. User Stories and Design Diagrams
    - [User Stories](./User%20Stories.md)
    - [Design Diagrams](./Design%20Diagrams/README.md)
 4. Project Tasks and Timeline
    - [Task List](./Task%20List.md)
-5. ABET Concerns
+5. [ABET Concerns Essay](./Project%20Constraints%20Essay.pdf)
 6. [PPT Presentation](./Fall%20Design%20Presentation.pptx)
 7. Self-Assessment Essays
    - [Milo Ginn](./Self%20Assessment%20Essays/Milo%20Ginn.md)
@@ -30,8 +28,7 @@
 9. Budget
    - This project has not incurred any expenses so far.
 10. Appendix
-
-- [Harvard Clean Energy Project Research](./HCEPDB/README.md)
+    - [Harvard Clean Energy Project Research](./HCEPDB/README.md)
 
 This section provides references, citations, links to code repositories, meeting
 notes, and evidence of work for each team member.
@@ -66,14 +63,26 @@ Each member will add their own contributions individually below.
     - Documenting the process and results in progress reports
 - **Dhruv:**
   - Work in progress is documented in the `pyg-exploration/` folder, including:
-    - PyTorch Geometric implementation and baseline analysis (pyg_tutorial_complete.py, outputs.pdf)
-    - Baseline model visualizations and performance metrics (baseline_predictions.png, feature_importance.png, transparency_distribution.png)
-    - Data files and preprocessed datasets (e.g., transparent_opv_candidates.csv, compound_quality_metrics.csv, compound_smiles_sample.csv)
-  - Researched PyTorch Geometric for molecular property prediction, performed baseline analysis, and prepared the graph neural network implementation for the OPV transparency prediction task. This involved:
-    - Researching graph neural network architectures for molecular property prediction and understanding GCN layers, message passing, and molecular graph representations (see pyg_tutorial_complete.py)
-    - Setting up development environment with PyTorch, PyTorch Geometric, and RDKit chemistry library
-    - Implementing baseline model achieving R² = 0.4335, RMSE = 0.7259 using spectral features
-    - Writing 300+ lines of code for SMILES-to-graph conversion, GCN architecture, and training loops (see pyg_tutorial_complete.py)
+    - PyTorch Geometric implementation and baseline analysis
+      (pyg_tutorial_complete.py, outputs.pdf)
+    - Baseline model visualizations and performance metrics
+      (baseline_predictions.png, feature_importance.png,
+      transparency_distribution.png)
+    - Data files and preprocessed datasets (e.g.,
+      transparent_opv_candidates.csv, compound_quality_metrics.csv,
+      compound_smiles_sample.csv)
+  - Researched PyTorch Geometric for molecular property prediction, performed
+    baseline analysis, and prepared the graph neural network implementation for
+    the OPV transparency prediction task. This involved:
+    - Researching graph neural network architectures for molecular property
+      prediction and understanding GCN layers, message passing, and molecular
+      graph representations (see pyg_tutorial_complete.py)
+    - Setting up development environment with PyTorch, PyTorch Geometric, and
+      RDKit chemistry library
+    - Implementing baseline model achieving R² = 0.4335, RMSE = 0.7259 using
+      spectral features
+    - Writing 300+ lines of code for SMILES-to-graph conversion, GCN
+      architecture, and training loops (see pyg_tutorial_complete.py)
     - Documenting the process and results in technical reports
 
 **References and Citations:**
@@ -81,14 +90,17 @@ Each member will add their own contributions individually below.
 - PyTorch Geometric Documentation: https://pytorch-geometric.readthedocs.io
 - Baseline Model Analysis: See pyg-exploration/outputs.pdf
 - PyG Implementation Pipeline: See pyg-exploration/pyg_tutorial_complete.py
-- Code Repository: [Project GitHub](https://github.com/Organic-Photovoltaics-Canopies/Project-Repository)
+- Code Repository:
+  [Project GitHub](https://github.com/Organic-Photovoltaics-Canopies/Project-Repository)
 
 **References and Citations:**
 
-- PyTorch Geometric Documentation: [https://pytorch-geometric.readthedocs.io](https://pytorch-geometric.readthedocs.io)
+- PyTorch Geometric Documentation:
+  [https://pytorch-geometric.readthedocs.io](https://pytorch-geometric.readthedocs.io)
 - Baseline Model Analysis: See `pyg-exploration/outputs.pdf`
 - PyG Implementation Pipeline: See `pyg-exploration/pyg_tutorial_complete.py`
-- Code Repository: [Project GitHub](https://github.com/Organic-Photovoltaics-Canopies/Project-Repository)
+- Code Repository:
+  [Project GitHub](https://github.com/Organic-Photovoltaics-Canopies/Project-Repository)
 
 **References and Citations:**
 
