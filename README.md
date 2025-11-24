@@ -15,6 +15,7 @@
    - [Design Diagrams](./Design%20Diagrams/README.md)
 4. Project Tasks and Timeline
    - [Task List](./Task%20List.md)
+   - [Timeline](./Milestones,%20Timeline,%20and%20Effort%20Matrix.pdf)
 5. [ABET Concerns Essay](./Project%20Constraints%20Essay.pdf)
 6. [PPT Presentation](./Fall%20Design%20Presentation.pptx)
 7. Self-Assessment Essays
