@@ -3,13 +3,18 @@
 ## Fall Design Report
 
 1. Team Members
-2. Project Description
-3. User Stories and Design Diagrams
-4. Project Tasks and Timeline
-5. ABET Concerns
-6. PPT Slideshow
-7. Self-Assessment Essays
-8. Professional Biographies
+   Milo Ginn
+   Om Jadhav
+   Dhruv Singh
+   Ido Gal
+   Toan Nham 
+3. Project Description
+4. User Stories and Design Diagrams
+5. Project Tasks and Timeline
+6. ABET Concerns
+7. PPT Slideshow
+8. Self-Assessment Essays
+9. Professional Biographies
    - [Milo Ginn](./Member%20Bios/Milo%20Ginn.md)
-9. Budget
-10. Appendix
+10. Budget
+11. Appendix
