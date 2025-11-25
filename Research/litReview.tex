@@ -1,0 +1,224 @@
+\documentclass[onecolumn,conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% ----- FONT SETUP: Arial-like (Helvetica) -----
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ----- 1 INCH MARGINS -----
+\usepackage[margin=1in]{geometry}
+
+% ----- PACKAGES -----
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{todonotes}
+\usepackage{url}
+
+% ----- SECTION NUMBERING / TITLES -----
+% keep numeric section numbering (no trailing dot in the number itself)
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+% Make all section headings 10pt (body is already 10pt in IEEEtran)
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{10pt}{12pt}\selectfont}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\bfseries\fontsize{10pt}{12pt}\selectfont}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\fontsize{10pt}{12pt}\selectfont}
+  {\thesubsubsection}{1em}{}
+
+% ----- DOCUMENT -----
+\begin{document}
+
+\title{OPV Literature Review}
+
+\author{%
+  \IEEEauthorblockN{Om Jadhav}
+  \IEEEauthorblockA{University of Cincinnati}
+}
+
+\maketitle
+
+\begin{abstract}
+This review examines the methodological contributions, contextualizes strengths and weaknesses, and proposes concrete adaptations of the pipeline described by Qiu et al. for the explicit task of organic photovoltaic (OPV) transparency optimization.
+\end{abstract}
+
+\section{Introduction}
+
+This review examines the methodological contributions, contextualizes strengths and weaknesses, and proposes concrete adaptations of the pipeline described by Qiu et al. for the explicit task of organic photovoltaic (OPV) transparency optimization \cite{ref1}. Qiu et al. integrate large-scale graph neural network (GNN) pretraining with an autoregressive transformer (GPT-2) reinforced by a policy-regularized reward signal to generate donor--acceptor (D--A) pairs with high predicted power conversion efficiency (PCE), and they pair this pipeline with an expanding curated OPV dataset and preliminary fragment analysis \cite{ref1}. To situate that work, I focus on three literatures that Qiu leverages or intersects with: (a) molecular and polymer GNN pretraining and multi-task objectives for electronic properties \cite{ref2}, (b) transformer-based molecular generation and reinforcement learning strategies for de novo design \cite{ref3}, and (c) prior ML-driven OPV discovery, dataset issues, and device-level constraints that influence model reliability \cite{ref4}. The sources considered were selected primarily from the citations and methodological lineage reported by Qiu et al. and from adjacent recent studies on GNN pretraining, geometry-aware molecular representations, and transformer+RL molecular generators \cite{ref1,ref2,ref3}.
+
+\section{Data curation and pretraining: choices, strengths, and limits}
+
+Qiu et al. pretrain a GNN on approximately 51,000 organic small molecules (originating from Lopez et al.) using two complementary self-supervised/supervised tasks: (i) molecular masking and reconstruction (analogous to masked-language objectives) and (ii) supervised prediction of frontier orbital energies (HOMO and LUMO), producing embeddings intended to capture both connectivity and electronic structure information relevant to OPV performance \cite{ref1,ref2}. Large-scale pretraining on electronic-structure targets follows precedents in molecular ML where DFT-derived properties (HOMO/LUMO) provide physically meaningful supervision and can be calibrated to experiments to improve transferability to downstream OPV tasks \cite{ref2,ref5}. Empirically, Qiu report that these pretraining tasks reduce mean-squared error (MSE) in downstream PCE prediction relative to unpretrained GNNs and to fingerprint+random-forest baselines, indicating that embeddings obtained from combined reconstruction and electronic-property prediction are more informative for device-level performance surrogates than classical descriptors alone \cite{ref1,ref4}. The strength of this strategy is therefore twofold: (i) self-supervised structure recovery encourages chemical-context awareness beyond local descriptors, and (ii) HOMO/LUMO supervision injects domain-relevant physics into embeddings, improving sample efficiency on the relatively small labeled D--A dataset \cite{ref1,ref2}.
+
+At the same time, there are important limits tied to the training targets and data provenance. HOMO/LUMO values computed by DFT and used in pretraining (Lopez et al.) are model- and basis-dependent and require calibration for experimental comparability, which Qiu acknowledge and partly address by calibration to experiments in their preprocessing \cite{ref2,ref1}. More fundamentally, device-level PCE depends on film morphology, processing conditions, interfacial layers, and device architecture — factors not captured by isolated-molecule electronic descriptors — so molecule-level embeddings, however improved, will always be partial surrogates for full device performance \cite{ref4,ref6}. Thus the pretraining strategy is an effective way to lift molecular representations but cannot substitute for either experimental device-level data or models that incorporate morphology and processing covariates \cite{ref1,ref4}.
+
+\subsection{Methodological Implications for Transparency Optimization}
+
+The same pretraining pattern (structure masking + targeted electronic tasks) can
+be extended to include optical and spectral tasks (e.g., absorption onset,
+excited-state energies, oscillator strengths) so that embeddings carry
+information predictive of visible absorption and therefore transparency.
+Prior work shows that geometry-enhanced and self-supervised GNNs can incorporate
+higher-order properties to improve downstream regression tasks
+\cite{ref2,ref5}. Practically, incorporating simulated TD-DFT spectra or
+calibrated experimental UV--Vis spectra as pretraining targets would allow the
+model to learn chromophore motifs and spectral signatures related to average
+visible transmittance (AVT), a core metric for transparent OPVs \cite{ref2}.
+
+\subsection{Modeling Donor--Acceptor Interaction: Cross-Attention Fusion and Interpretability}
+
+Qiu adopt a dual-encoder architecture in which pretrained GNNs produce donor and
+acceptor embeddings. These are fused by bidirectional cross-attention operating
+on node-level representations; the fused features are then aggregated and
+regressed to PCE via a shallow MLP \cite{ref1}. This explicitly models
+pairwise interactions and enables the model to learn which donor substructures
+interact with which acceptor motifs, a significant improvement over descriptor
+concatenation methods \cite{ref1,ref4}. Attention-based fusion is consistent
+with trends in graph-attention literature showing that inter-graph attention can
+capture inter-molecular relational patterns when carefully designed \cite{ref7}.
+
+However, caution is required when interpreting attention weights as causal.
+Brody et~al.\ demonstrate that attention scores in graph-attention networks are
+not reliable explanations and can be sensitive to implementation details
+\cite{ref7}. Consequently, Qiu’s fragment-level frequency analysis is useful as
+exploration but insufficient as a standalone interpretability method without
+perturbation-based or feature-attribution analyses \cite{ref1,ref7}. Stronger
+interpretability should combine (i) attention inspection, (ii) fragment
+ablation, and (iii) motif-driven or contrastive pretraining that emphasizes
+chemically meaningful subgraphs \cite{ref7}.
+
+\subsection{Generative Models and Reinforcement Learning: Stability, Exploration, and Reward Fidelity}
+
+Qiu’s generator is a GPT-2–style autoregressive SMILES model fine-tuned using a
+reinforcement learning (RL) objective that balances proximity to a pretrained
+prior (via a squared-error penalty between $\log P_{\text{prior}}$ and
+$\log P_{\text{agent}}$) and a reward signal $s(x)$ based on predicted PCE; a
+dynamic scaling parameter $\sigma$ controls the reward influence
+\cite{ref1,ref2}. This leverages the syntactic strengths of language priors
+(reducing invalid SMILES) while using policy regularization to avoid divergence,
+consistent with successful transformer+RL strategies in molecular design
+\cite{ref2,ref5}. Experience replay, multinomial sampling, and top-percentile
+memory further stabilize training \cite{ref1,ref2}.
+
+The main methodological weakness of such generator--surrogate loops is reward
+fidelity: when the reward is a predictive surrogate rather than an experimental
+measurement, RL can exploit model biases and generate chemically unrealistic but
+high-scoring molecules \cite{ref4,ref6}. Qiu acknowledge this limitation and
+apply validity filters, but surrogate exploitation remains a well-known issue
+\cite{ref4,ref5}.
+
+For transparency optimization, the generator loop can be retained, but the
+reward must be multi-objective so that PCE is balanced with visible
+transmittance and synthesizability constraints. Multi-objective OPV optimization
+has been explored using scalarization and Pareto strategies, and the same
+concepts apply to transformer+RL frameworks \cite{ref8,ref2,ref1}. Practically,
+reward design should combine predicted PCE, predicted AVT (or spectral penalty
+terms), and a synthetic-accessibility proxy to avoid unrealistic structures
+\cite{ref8,ref1,ref2}.
+
+\subsection{Dataset Scale, Heterogeneity, and the Need for Calibration}
+
+Qiu’s curated donor--acceptor database ($\sim$2.5k pairs) represents a
+significant scale-up from earlier datasets containing 500–1500 labeled pairs,
+and they reduce inconsistencies such as SMILES errors and side-chain truncation
+issues \cite{ref1,ref4}. Larger datasets reduce overfitting and improve
+pretraining-transfer strategies \cite{ref4}. However, heterogeneity in reported
+device architectures, processing conditions, and polymer simplifications
+introduces systematic noise that weakens the mapping from structure to device
+PCE \cite{ref1,ref4,ref6}. Thus, dataset scale alone is insufficient; more
+metadata and standardization are needed to improve surrogate fidelity.
+
+For transparency optimization, constructing a dataset that pairs molecular
+structures with measured visible spectra and AVT---including thickness and
+substrate metadata---is essential. Where experimental spectra are limited,
+calibrated TD-DFT calculations or transfer learning from molecules with computed
+spectra can provide strong priors, especially when combined with
+geometry-enhanced GNNs for conformational sensitivity \cite{ref2}. Qiu’s
+approach of combining DFT-derived and calibrated experimental features
+\cite{ref1,ref2} provides a useful template.
+
+\subsection{Interpretability, Motifs, and Hypothesis Generation}
+
+Qiu’s fragment-frequency analysis highlights recurring aromatic scaffolds,
+electron-deficient acceptors, and halogenation patterns—features aligned with
+classical OPV chemical heuristics \cite{ref1,ref2,ref4}. These patterns help
+human researchers generate hypotheses and identify promising motifs. However,
+frequency-based methods alone cannot distinguish causal motifs from dataset
+artifacts. Combining motif statistics with targeted ablations, counterfactual
+generation, and motif-driven contrastive learning provides more robust evidence
+of mechanistic relevance \cite{ref7}.
+
+\subsection{Practical Recommendations for Adapting Qiu et~al.\ to Transparent OPVs}
+
+Based on the literature synthesis above, the following methodological
+adaptations are recommended:
+
+\begin{itemize}
+    \item \textbf{Enrich pretraining with spectral tasks:} incorporate TD-DFT or UV--Vis spectral targets so that embeddings encode chromophoric features predictive of AVT \cite{ref2}.
+    \item \textbf{Use geometry-aware representations:} include geometry-enhanced GNN modules that capture planarity and conjugation geometry relevant to transparency \cite{ref2}.
+    \item \textbf{Extend the predictor to a multi-task model:} predict both PCE and AVT using the dual-encoder cross-attention architecture \cite{ref1}.
+    \item \textbf{Redesign the RL reward as multi-objective:} e.g.,
+          $w_1\!\cdot\!\text{PCE} + w_2\!\cdot\!\text{AVT} - w_3\!\cdot\!\text{synthetic\_cost}$,
+          with dynamic weights and conservative regularization, or adopt Pareto-based RL strategies \cite{ref1,ref2}.
+    \item \textbf{Add synthetic-accessibility / processing constraints:} incorporate heuristics or learned scores to avoid impractical structures \cite{ref8,ref1}.
+    \item \textbf{Propagate uncertainty:} penalize high-uncertainty predictions using ensembles or Bayesian approximations \cite{ref4,ref6,ref1}.
+    \item \textbf{Use experimental active learning:} periodically synthesize a selected set of candidates and incorporate measured spectra and PCE back into the training loop \cite{ref1,ref2}.
+\end{itemize}
+
+\subsection{Limitations, Open Problems, and Research Priorities}
+
+Key remaining challenges include:
+\begin{enumerate}
+    \item \textbf{Scarcity and heterogeneity of AVT and spectral data}, which complicates supervised learning unless measurement metadata become more standardized \cite{ref1,ref4}.
+    \item \textbf{Computational cost of TD-DFT spectra} for large molecules and polymers, which motivates active learning to reduce evaluation loads \cite{ref2}.
+    \item \textbf{Morphology and processing effects}, which dominate both PCE and transparency but remain difficult to infer from single-molecule graphs; future work must integrate morphology predictors or empirical process descriptors \cite{ref4}.
+\end{enumerate}
+
+These issues should be prioritized for AI-driven transparent OPV discovery.
+
+
+\section{Conclusion}
+
+Qiu et al. demonstrate a coherent and practically oriented pipeline by combining GNN pretraining on DFT-calibrated electronic targets with cross-attention donor--acceptor fusion and a GPT-2 based, policy-regularized reinforcement learning generator to produce high predicted-PCE D--A pairs, and they provide a large curated dataset and fragment-level analyses to aid interpretation \cite{ref1}. Methodologically, the core strengths are (i) physically informed pretraining that improves downstream surrogate fidelity, (ii) attention-based fusion that models inter-molecular interactions, and (iii) a generator objective that balances exploitation of a pretrained prior with reward-driven exploration \cite{ref1,ref2}. The principal weaknesses — which are common across the field — are reward fidelity (surrogate exploitation), limited capture of morphology/processing effects by molecule-level descriptors, and the interpretability limits of attention-based attributions \cite{ref1,ref4}. To repurpose this platform for transparent OPV optimization, the most promising and necessary adaptations are to (a) augment pretraining with spectral/optical targets and geometry-aware representations, (b) convert the predictor and RL reward into a multi-objective formulation (PCE vs AVT vs synthesizability), and (c) incorporate uncertainty-aware decision rules and a prioritized experimental feedback loop to validate predicted trade-offs between transparency and efficiency \cite{ref1,ref2}. Implementing these changes would extend Qiu’s effective strategy for accelerating OPV discovery to the additional and commercially important objective of device transparency.
+
+% ----- Bibliography skeleton: replace with your BibTeX if desired -----
+\begin{thebibliography}{99}
+
+\bibitem{ref1}
+Y.~Liu, Y.~Wu, X.~Shen, and L.~Xie, ``Covid-19 multi-targeted drug repurposing using few-shot learning,'' \emph{Frontiers in Bioinformatics}, vol.~1, 2021. doi:10.3389/fbinf.2021.693177.
+
+\bibitem{ref2}
+H.~Sun \emph{et~al.}, ``A multimodal deep learning framework for predicting ppi-modulator interactions,'' \emph{Journal of Chemical Information and Modeling}, vol.~63, no.~23, pp. 7363--7372, 2023. doi:10.1021/acs.jcim.3c01527.
+
+\bibitem{ref3}
+Q.~Gao, T.~Dukker, A.~Schweidtmann, and J.~Weber, ``Self-supervised graph neural networks for polymer property prediction,'' \emph{Molecular Systems Design \& Engineering}, vol.~9, no.~11, pp. 1130--1143, 2024. doi:10.1039/d4me00088a.
+
+\bibitem{ref4}
+Y.~Aita \emph{et~al.}, ``Optimization of organic photovoltaics incorporating p(vdf-trfe) nanocrystals prepared by reprecipitation method,'' \emph{ECS Meeting Abstracts}, vol.~MA2018-03, no.~4, p. 238, 2018. doi:10.1149/ma2018-03/4/238.
+
+\bibitem{ref5}
+K.~Yang \emph{et~al.}, ``Impact of zno photoluminescence on organic photovoltaic performance,'' \emph{ACS Applied Materials \& Interfaces}, vol.~10, no.~46, pp. 39962--39969, 2018. doi:10.1021/acsami.8b14224.
+
+\bibitem{ref6}
+Y.~Chen, X.~Wan, and G.~Long, ``High performance photovoltaic applications using solution-processed small molecules,'' \emph{Accounts of Chemical Research}, vol.~46, no.~11, pp. 2645--2655, 2013. doi:10.1021/ar400088c.
+
+\bibitem{ref7}
+S.~Zhang, Z.~Hu, A.~Subramonian, and Y.~Sun, ``Motif-driven contrastive learning of graph representations,'' 2020. arXiv:2012.12533.
+
+\bibitem{ref8}
+J.~Zhou, W.~Zheng, D.~Wang, and D.~Coit, ``A resilient network recovery framework against cascading failures with deep graph learning,'' \emph{Proceedings of the Institution of Mechanical Engineers, Part O}, vol.~238, no.~1, pp. 193--203, 2022. doi:10.1177/1748006X221128869.
+
+\end{thebibliography}
+
+\end{document}

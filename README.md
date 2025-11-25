@@ -86,6 +86,27 @@ Each member will add their own contributions individually below.
       architecture, and training loops (see pyg_tutorial_complete.py)
     - Documenting the process and results in technical reports
 
+- **Om:**
+  - Work in progress is documented in the `Research/` folder. Including:
+
+    - A comprehensive literature review on graph neural network (GNN) pretraining, transformer-based molecular generation, reinforcement learning for de novo design, and methodological pipelines for OPV material discovery (`litReview.tex`).
+    - A structured analysis of Qiu et al.’s methodology, along with recommendations for adapting the pipeline to transparent OPV optimization (see `litReview.tex`).
+    - Skeleton code and an executable test script to benchmark Hugging Face GNN models (e.g., Graphormer)(`hf_gnn_test.py`).
+  - Researched modern GNN architectures, self-supervised molecular representation learning, cross-attention donor–acceptor fusion models, and transformer-based molecular generation pipelines. This involved:
+
+    - Reviewing ~15 papers on GNN pretraining, spectral/electronic descriptors, and transformer+RL molecular design, focusing on how these techniques apply to OPV PCE and transparency.
+    - Writing a 4-page IEEE-style literature review analyzing strengths, limitations, and methodological implications of current OPV ML pipelines (see `litReview.tex`).
+    - Identifying gaps in existing OPV datasets, including the scarcity of AVT/spectral data, the heterogeneity of PCE measurements, and the need for DFT-calibrated optical descriptors.
+    - Extracting actionable recommendations for transparency optimization, including:
+
+      - integrating spectral/optical property pretraining targets,
+      - adopting geometry-aware GNNs,
+      - multi-objective prediction of PCE and AVT,
+      - incorporating synthetic accessibility and uncertainty-aware scoring.
+  - Developed a runnable baseline environment for evaluating Hugging Face GNNs on molecular graph inputs. This included:
+    - Writing skeleton code to load, configure, and run Graphormer-style models from Hugging Face using PyTorch (`hf_gnn_test.py`).
+    
+
 **References and Citations:**
 
 - PyTorch Geometric Documentation: https://pytorch-geometric.readthedocs.io
