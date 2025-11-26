@@ -105,7 +105,23 @@ Each member will add their own contributions individually below.
       - incorporating synthetic accessibility and uncertainty-aware scoring.
   - Developed a runnable baseline environment for evaluating Hugging Face GNNs on molecular graph inputs. This included:
     - Writing skeleton code to load, configure, and run Graphormer-style models from Hugging Face using PyTorch (`hf_gnn_test.py`).
-    
+
+- **Toan Nham:**
+  - Work in progress is documented in the `preprocessing/` folder, including:
+    - Data preprocessing pipeline for CEPDB dataset (`pipeline.py`)
+    - Modular preprocessing components (data_loader.py, data_integration.py, graph_builder.py, feature_engineering.py, target_preparation.py, data_validation.py, data_splitting.py, feature_scaling.py, graphormer_encoding.py)
+    - Setup and configuration documentation (`SETUP_GUIDE.md`, `config.py`)
+    - Preprocessed datasets (molecules.csv, graph objects, scalers, data splits)
+  - Researched Graphormer architecture and prepared the CEPDB dataset for model training. This involved:
+    - Researching Graphormer transformer architecture and its requirements for molecular graph inputs, including spatial encoding and attention mechanisms
+    - Implementing data preprocessing pipeline covering data loading, integration, graph building, feature engineering, validation, and splitting
+    - Converting SMILES strings to PyTorch Geometric graph objects using RDKit
+    - Engineering molecular features including heteroatom ratios, electronic properties, and structural descriptors
+    - Implementing scaffold-based train/val/test splitting to ensure generalization
+    - Creating Graphormer-specific encodings (spatial positions, centrality measures, attention bias)
+    - Preparing 186 molecules with complete target data for multi-task regression (PCE, Voc, Jsc prediction)
+    - Writing documentation for setup, dependencies, and troubleshooting
+
 
 **References and Citations:**
 
