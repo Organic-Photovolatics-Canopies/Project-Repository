@@ -1,5 +1,23 @@
 # AI-Powered OPV Design
 
+## 📚 Documentation
+
+**New users?** Start here to learn about the project and how to use the preprocessing pipeline:
+
+- **[📖 Documentation Home](docs/README.md)** - Complete documentation hub
+- **[🚀 Quick Start Guide](docs/user-guide.md)** - Get started in 5 minutes
+- **[⚙️ Installation](docs/installation.md)** - Set up your environment
+- **[📘 User Manual](docs/user-manual.md)** - Comprehensive technical reference
+- **[❓ FAQ](docs/faq.md)** - Frequently asked questions
+- **[🔧 Troubleshooting](docs/troubleshooting.md)** - Problem solving guide
+- **[💾 Data Sources](docs/data-sources.md)** - Dataset information
+
+**External Resources:**
+- **Demo**: [HuggingFace/Kaggle Demo](https://huggingface.co/) *(Coming Soon)*
+- **Reference Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
+
+---
+
 ## Fall Design Report
 
 1. Team Members
