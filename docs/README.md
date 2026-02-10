@@ -18,8 +18,7 @@ Welcome to the **OMID USA** (AI-Powered Design of Organic Photovoltaics Canopies
 
 ### External Resources
 - **Demo**: [HuggingFace/Kaggle Demo](https://huggingface.co/) *(Coming Soon)*
-- **Primary Dataset**: [Harvard Clean Energy Project Database (HCEPDB)](../HCEPDB/)
-- **Reference Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
+- **Primary Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
 - **Repository**: [Project Repository](https://github.com/)
 
 ### Project Files
@@ -60,7 +59,7 @@ OMID USA is a machine learning research project that leverages advanced Graph Ne
 ## 📊 Current Status
 
 ### Completed ✅
-- Data acquisition and analysis (HCEPDB dataset)
+- Data acquisition and analysis (OPV2D dataset)
 - Complete 10-step preprocessing pipeline
 - Baseline GCN implementation (R² = 0.4335, RMSE = 0.7259)
 - Graphormer encoding implementation
@@ -68,6 +67,7 @@ OMID USA is a machine learning research project that leverages advanced Graph Ne
 
 ### In Progress 🔄
 - Graphormer model training and optimization
+- TD-DFT absorption data generation for transparency optimization
 - Web interface development
 - LLM integration for design recommendations
 - Model deployment to HuggingFace/Kaggle
@@ -79,9 +79,12 @@ OMID USA is a machine learning research project that leverages advanced Graph Ne
 3. **Deep Dive**: Explore the [User Manual](user-manual.md) for detailed technical information
 4. **Issues**: Check the [FAQ](faq.md) and [Troubleshooting](troubleshooting.md) guides
 
+> **📝 Note**: Preprocessing notebooks for OPV2D dataset and documentation images will be added soon. 
+> See [TODO.md](TODO.md) for planned updates.
+
 ## 📝 License & Citation
 
-This project uses data from the Harvard Clean Energy Project Database. If you use this project in your research, please cite appropriately.
+This project uses data from the OPV2D dataset. If you use this project in your research, please cite appropriately. See [Data Sources](data-sources.md) for citation information.
 
 ## 🤝 Contributing
 

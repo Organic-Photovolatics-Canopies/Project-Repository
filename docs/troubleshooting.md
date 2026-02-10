@@ -213,7 +213,7 @@ conda install --force-reinstall rdkit -c conda-forge
 
 **Error Messages**:
 ```
-FileNotFoundError: [Errno 2] No such file or directory: 'HCEPDB/data_calcqcset1.csv'
+FileNotFoundError: [Errno 2] No such file or directory: 'path/to/data.csv'
 ```
 
 **Solutions**:
@@ -227,26 +227,29 @@ pwd
 cd /path/to/Project-Repository
 ```
 
-**Solution 2: Verify file exists**
+**Solution 2: Verify dataset is cloned**
 ```bash
-ls -la HCEPDB/
-# Should show: data_calcqcset1.csv
+# Check if OPV2D dataset exists
+ls -la OPV2D/data/
+
+# If not, clone it
+git clone https://github.com/sunyrain/OPV2D.git
 ```
 
 **Solution 3: Check file permissions**
 ```bash
-ls -l HCEPDB/data_calcqcset1.csv
+ls -l path/to/data.csv
 # Should be readable: -rw-r--r--
 
 # If not, fix permissions
-chmod 644 HCEPDB/data_calcqcset1.csv
+chmod 644 path/to/data.csv
 ```
 
 **Solution 4: Use absolute path**
 ```python
 # Edit preprocessing/config.py
 import os
-DATA_PATH = os.path.join(os.path.dirname(__file__), '..', 'HCEPDB', 'data_calcqcset1.csv')
+DATA_PATH = os.path.join(os.path.dirname(__file__), '..', 'OPV2D', 'data', 'opv_data.csv')
 DATA_PATH = os.path.abspath(DATA_PATH)
 ```
 
@@ -384,8 +387,7 @@ def sanitize_smiles(smiles):
     return None
 
 df['smiles'] = df['smiles'].apply(sanitize_smiles)
-df = df.dropna(subset=['smiles'])
-```
+df = df.dropna(subset=['smiles'])df.to_csv('cleaned_data.csv', index=False)```
 
 ---
 

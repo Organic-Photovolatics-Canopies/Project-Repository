@@ -63,7 +63,7 @@ Consider adding these images to enhance the documentation:
 5. **data-sources.md**:
    - Property distribution plots
    - Dataset statistics visualizations
-   - Example molecules from HCEPDB
+   - Example molecules from OPV2D dataset
 
 ---
 

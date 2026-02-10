@@ -116,17 +116,19 @@ python -c "import torch_geometric; print('PyG version:', torch_geometric.__versi
 
 Expected output: `PyG version: 2.x.x` or similar
 
-### 7. Download Dataset (Optional)
+### 7. Download Dataset
 
-The repository includes a sample dataset in `HCEPDB/`. For the full dataset:
+Clone the OPV2D dataset:
 
 ```bash
-# Sample data is already included
-ls HCEPDB/data_calcqcset1.csv
+# Clone OPV2D repository
+git clone https://github.com/sunyrain/OPV2D.git
 
-# For full HCEPDB dataset, download from:
-# https://www.cepdb.net (follow their download instructions)
+# Verify data files
+ls OPV2D/data/
 ```
+
+**Note**: Preprocessing scripts for OPV2D will be added to the repository soon.
 
 ---
 
@@ -166,7 +168,7 @@ Expected behavior:
 - Creates `preprocessed_data/` directory with processed outputs
 - Displays summary statistics at completion
 
-**Estimated time**: 2-5 minutes for the sample dataset (186 molecules)
+**Estimated time**: Varies by dataset size (see user guide)
 
 ### Check Output Files
 

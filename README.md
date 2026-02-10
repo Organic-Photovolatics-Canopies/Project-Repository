@@ -14,7 +14,7 @@
 
 **External Resources:**
 - **Demo**: [HuggingFace/Kaggle Demo](https://huggingface.co/) *(Coming Soon)*
-- **Reference Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
+- **Primary Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
 
 ---
 
@@ -47,7 +47,7 @@
 9. Budget
    - This project has not incurred any expenses so far.
 10. Appendix
-    - [Harvard Clean Energy Project Research](./HCEPDB/README.md)
+    - [OPV2D Dataset Research](https://github.com/sunyrain/OPV2D)
 
 This section provides references, citations, links to code repositories, meeting
 notes, and evidence of work for each team member.
@@ -72,11 +72,10 @@ Each member will add their own contributions individually below.
       [pipeline.sql](progress/pipeline.sql))
     - Data files and analysis images (e.g., `data_calcqcset1.csv`,
       `comprehensive_analysis.png`, `database_structure_analysis.png`)
-  - Researched the Harvard Clean Energy dataset, performed data cleaning, and
+  - Researched the OPV2D dataset, performed data cleaning, and
     prepared the data for machine learning model training. This involved:
     - Downloading, exploring, and understanding the dataset structure
-    - Cleaning quantum chemistry tables using statistical filtering (see
-      `dataset_documentation.md`)
+    - Cleaning and processing molecular property data
     - Writing SQL and Python scripts to process and validate the data (see
       `pipeline.sql`)
     - Documenting the process and results in progress reports
@@ -126,11 +125,11 @@ Each member will add their own contributions individually below.
 
 - **Toan Nham:**
   - Work in progress is documented in the `preprocessing/` folder, including:
-    - Data preprocessing pipeline for CEPDB dataset (`pipeline.py`)
+    - Data preprocessing pipeline for molecular datasets (`pipeline.py`)
     - Modular preprocessing components (data_loader.py, data_integration.py, graph_builder.py, feature_engineering.py, target_preparation.py, data_validation.py, data_splitting.py, feature_scaling.py, graphormer_encoding.py)
     - Setup and configuration documentation (`SETUP_GUIDE.md`, `config.py`)
     - Preprocessed datasets (molecules.csv, graph objects, scalers, data splits)
-  - Researched Graphormer architecture and prepared the CEPDB dataset for model training. This involved:
+  - Researched Graphormer architecture and prepared the OPV2D dataset for model training. This involved:
     - Researching Graphormer transformer architecture and its requirements for molecular graph inputs, including spatial encoding and attention mechanisms
     - Implementing data preprocessing pipeline covering data loading, integration, graph building, feature engineering, validation, and splitting
     - Converting SMILES strings to PyTorch Geometric graph objects using RDKit
@@ -160,8 +159,8 @@ Each member will add their own contributions individually below.
 
 **References and Citations:**
 
-- Harvard Clean Energy Project Dataset:
-  [https://www.census.gov/data/datasets/clean-energy.html](https://www.census.gov/data/datasets/clean-energy.html)
+- OPV2D Dataset:
+  [https://github.com/sunyrain/OPV2D](https://github.com/sunyrain/OPV2D)
 - Quantum Chemistry Data Analysis: See
   `progress/Quantum_Chemistry_Analysis_Report.md`
 - Data Cleaning Pipeline: See `progress/dataset_documentation.md` and

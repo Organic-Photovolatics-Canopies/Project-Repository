@@ -60,7 +60,7 @@ The project includes three levels of design diagrams (see [Design Diagrams/](../
 | **Machine Learning** | PyTorch, scikit-learn |
 | **Chemistry** | RDKit, SMILES, molecular descriptors |
 | **Data Storage** | CSV, PyTorch tensors (.pt), pickle |
-| **Quantum Chemistry** | HCEPDB (DFT calculations) |
+| **Quantum Chemistry** | DFT calculations from OPV2D |
 
 ---
 
@@ -97,7 +97,7 @@ class PreprocessingPipeline:
 
 **Module**: `preprocessing/data_loader.py`
 
-Loads CSV files from the HCEPDB dataset:
+Loads CSV files from the OPV2D dataset:
 
 ```python
 def load_data(data_path: str) -> pd.DataFrame:
@@ -112,36 +112,28 @@ def load_data(data_path: str) -> pd.DataFrame:
     """
 ```
 
-**Input**: CSV files with quantum chemistry calculations
-**Output**: pandas DataFrame with ~186 molecules
-**Key Columns**: `smiles`, `InChIKey`, `homo`, `lumo`, `gap`
+**Input**: CSV files with quantum chemistry calculations and device data
+**Output**: pandas DataFrame with molecular data
+**Key Columns**: `smiles`, `homo`, `lumo`, `gap`, `pce`, `voc`, `jsc`
 
 #### Step 2: Data Integration
 
 **Module**: `preprocessing/data_integration.py`
 
-Merges relational tables from HCEPDB:
-
-- **calibqc**: Calibrated quantum chemistry calculations
-- **scharber**: Scharber model predictions for OPV properties
-- **molgraph**: Molecular graph representations
+Integrates and cleans molecular data:
 
 ```python
-def integrate_tables(
-    calibqc: pd.DataFrame,
-    scharber: pd.DataFrame,
-    molgraph: pd.DataFrame
-) -> pd.DataFrame:
+def integrate_data(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Merge HCEPDB tables on InChIKey.
+    Process and integrate molecular property data.
     
     Returns:
         Integrated DataFrame with all features and targets.
     """
 ```
 
-**Join Key**: `InChIKey` (unique molecular identifier)
-**Output**: Single DataFrame with all quantum chemistry features and OPV targets
+**Processing**: Handles missing values, validates data quality
+**Output**: Single DataFrame with all electronic features and OPV targets
 
 #### Step 3: Graph Building
 
@@ -189,6 +181,11 @@ def smiles_to_graph(smiles: str) -> Data:
 - SMILES (Simplified Molecular Input Line Entry System) is a text notation for molecular structures
 - Example: `C1=CC=CC=C1` represents benzene (6-carbon aromatic ring)
 - Atoms become graph nodes, bonds become edges
+
+**Optical Properties Note**:
+- Absorption spectra will be generated using TD-DFT calculations
+- These predict which wavelengths each molecule absorbs
+- Critical for transparency-optimized OPV design
 
 #### Step 4: Feature Engineering
 
@@ -453,7 +450,7 @@ def save_preprocessed_data(output_dir: str, **kwargs):
 
 ```python
 # Data paths
-DATA_PATH = "HCEPDB/data_calcqcset1.csv"
+DATA_PATH = "path/to/opv2d/data.csv"
 OUTPUT_DIR = "preprocessed_data/"
 
 # Dataset splitting
@@ -520,23 +517,22 @@ OUTPUT_DIR = "custom_preprocessed/"
 
 ## Data Schema
 
-### Input Data Schema (HCEPDB)
+### Input Data Schema (OPV2D)
 
 Expected CSV columns:
 
 | Column | Type | Description | Required |
 |--------|------|-------------|----------|
 | `smiles` | string | SMILES molecular representation | Yes |
-| `InChIKey` | string | Unique molecular identifier | Yes |
+| `InChIKey` or `id` | string | Unique molecular identifier | Yes |
 | `homo` | float | HOMO energy (eV) | Yes |
 | `lumo` | float | LUMO energy (eV) | Yes |
 | `gap` | float | HOMO-LUMO gap (eV) | Yes |
 | `pce` | float | Power Conversion Efficiency (%) | Yes |
 | `voc` | float | Open-Circuit Voltage (V) | Yes |
 | `jsc` | float | Short-Circuit Current Density (mA/cm²) | Yes |
-| `dipole_x` | float | Dipole moment X component | No |
-| `dipole_y` | float | Dipole moment Y component | No |
-| `dipole_z` | float | Dipole moment Z component | No |
+| `optical_gap` | float | Optical bandgap (eV) | No |
+| `absorption` | float | Absorption properties | No |
 
 ### Output Data Schema
 
@@ -592,18 +588,19 @@ Data(
 {
   "preprocessing_version": "1.0",
   "preprocessing_date": "2026-02-10",
-  "num_molecules": 186,
-  "num_valid_molecules": 186,
-  "train_size": 130,
-  "val_size": 28,
-  "test_size": 28,
+  "dataset_source": "OPV2D",
+  "num_molecules": 15000,
+  "num_valid_molecules": 14850,
+  "train_size": 10395,
+  "val_size": 2228,
+  "test_size": 2227,
   "split_method": "scaffold",
   "feature_dim": 7,
   "edge_feature_dim": 3,
   "target_dim": 3,
   "num_engineered_features": 11,
   "config": {
-    "DATA_PATH": "HCEPDB/data_calcqcset1.csv",
+    "DATA_PATH": "OPV2D/data/opv_data.csv",
     "TRAIN_RATIO": 0.7,
     "VAL_RATIO": 0.15,
     "TEST_RATIO": 0.15

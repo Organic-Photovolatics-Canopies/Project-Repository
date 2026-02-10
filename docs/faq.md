@@ -90,7 +90,7 @@ This means:
 
 1. **CSV format** with required columns:
    - `smiles`: SMILES molecular representation
-   - `InChIKey`: Unique identifier (can be generated)
+   - `InChIKey` or unique identifier
    - `homo`: HOMO energy (eV)
    - `lumo`: LUMO energy (eV)
    - `pce`: Power Conversion Efficiency (%)
@@ -99,7 +99,7 @@ This means:
 
 2. **Valid SMILES strings**: Must be parseable by RDKit
 
-3. **Complete quantum chemistry data**: HOMO/LUMO energies typically from DFT calculations
+3. **Complete data**: Required properties should be present
 
 **Steps**:
 ```python
@@ -120,12 +120,9 @@ python -m preprocessing.pipeline
 | Dataset Size | Estimated Time (CPU) | Memory Usage |
 |--------------|---------------------|--------------|
 | 100 molecules | 1-2 minutes | 2-4 GB |
-| 500 molecules | 5-10 minutes | 4-8 GB |
-| 1,000 molecules | 15-30 minutes | 8-16 GB |
-| 10,000 molecules | 3-5 hours | 16-32 GB |
-
-**Bottlenecks**:
-- SMILES → Graph conversion (RDKit)
+| 1,000 molecules | 10-20 minutes | 4-8 GB |
+| 5,000 molecules | 1-2 hours | 8-16 GB |
+| 15,000 molecules | 4-6 hours | 16-32 GB |
 - Feature engineering (molecular descriptors)
 - Graphormer encoding (spatial distances)
 
@@ -134,22 +131,21 @@ python -m preprocessing.pipeline
 - Disable Graphormer encoding if not needed (`USE_GRAPHORMER_ENCODING = False`)
 - Use GPU for model training (not preprocessing)
 
-### What's the difference between HCEPDB and OPV2D datasets?
+### What's the difference between OPV2D and other OPV datasets?
 
-**HCEPDB (Harvard Clean Energy Project Database)**:
-- **Our primary dataset**
-- 2.3 million molecules (we use a subset)
-- DFT calculations at PBE/6-31G* level
-- Includes Scharber model predictions for OPV properties
-- Reference: [https://www.cepdb.net](https://www.cepdb.net)
-
-**OPV2D (Referenced dataset)**:
-- External reference dataset for comparison
-- Focus on 2D organic semiconductors
-- Different molecular diversity
+**OPV2D (Our primary dataset)**:
+- ~15,000 organic semiconductor materials
+- DFT calculations with experimental validation
+- Focus on 2D materials and proven OPV compounds
+- Open-source (MIT license)
 - Reference: [https://github.com/sunyrain/OPV2D](https://github.com/sunyrain/OPV2D)
 
-We primarily use HCEPDB but reference OPV2D for benchmarking and literature comparison.
+**Other datasets**:
+- **HCEPDB**: 2.3M+ computationally screened molecules (Scharber model)
+- **CEP**: Harvard Clean Energy Project (older, purely computational)
+- **Experimental databases**: Smaller, high-quality experimental data
+
+We use OPV2D because it balances computational predictions with experimental validation, providing more reliable training data.
 
 ---
 
@@ -395,6 +391,8 @@ The 0.3V loss comes from charge separation and extraction losses.
 
 **Transparency mechanisms**:
 1. **Selective absorption**: Absorb UV/near-IR, transmit visible light
+   - Predicted using TD-DFT absorption spectra calculations
+   - Target absorption windows: <400 nm (UV) and >700 nm (near-IR)
 2. **Thin films**: Reduce material thickness
 3. **Larger bandgap**: Only absorb higher-energy photons
 

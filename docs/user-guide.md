@@ -32,6 +32,8 @@ Traditional solar panels are opaque and block sunlight. This makes them unsuitab
 
 **Organic Photovoltaics (OPVs)** can be transparent, flexible, and lightweight—perfect for these applications!
 
+**Our Approach**: We use TD-DFT (Time-Dependent Density Functional Theory) calculations to predict absorption spectra, allowing us to design materials that absorb specific wavelengths while remaining transparent in the visible range.
+
 ### Our Solution
 
 We use **Graph Neural Networks** (GNNs) to predict how well different molecular designs will perform as OPV materials. Our system predicts three critical properties:
@@ -71,13 +73,13 @@ You'll see progress messages for each of 10 preprocessing steps:
 
 ```
 [Step 1/10] Loading data...
-✓ Loaded 186 molecules from HCEPDB
+✓ Loaded molecules from OPV2D dataset
 
 [Step 2/10] Integrating data tables...
-✓ Merged calibqc, scharber, and molgraph tables
+✓ Processed molecular data
 
 [Step 3/10] Building graphs from SMILES...
-✓ Created 186 molecular graphs
+✓ Created molecular graphs
 
 ...
 
@@ -100,6 +102,8 @@ ls preprocessed_data/
 ```
 
 🎉 **Success!** You've processed your first molecular dataset.
+
+**Note**: Preprocessing notebooks and updated data files will be added to the repository soon.
 
 ---
 
@@ -153,16 +157,18 @@ The OMID USA system follows this high-level workflow:
 
 **1. Prepare Your Data**
 
-The pipeline expects CSV files in `Datasets/` directory (or uses the included sample in `HCEPDB/`):
+The pipeline expects CSV files with molecular data:
 
 ```bash
-# If using the included sample (default)
-# Data is already in: HCEPDB/data_calcqcset1.csv
+# Clone OPV2D dataset (recommended)
+git clone https://github.com/sunyrain/OPV2D.git
 
-# If using custom data, place CSV files in:
-mkdir -p Datasets/cepdb_truncated_first_100_querries/
+# Or use custom data - place CSV files in Datasets/ directory
+mkdir -p Datasets/
 # Copy your CSV files there
 ```
+
+**Note**: Updated preprocessing notebooks for OPV2D will be available soon.
 
 **2. Configure the Pipeline (Optional)**
 
@@ -170,11 +176,11 @@ Edit `preprocessing/config.py` to customize settings:
 
 ```python
 # Example configurations in config.py
-DATA_PATH = "HCEPDB/data_calcqcset1.csv"  # Data source
-OUTPUT_DIR = "preprocessed_data/"          # Output location
-TRAIN_RATIO = 0.7                          # Training set size
-VAL_RATIO = 0.15                           # Validation set size
-TEST_RATIO = 0.15                          # Test set size
+DATA_PATH = "path/to/opv2d/data.csv"  # Data source
+OUTPUT_DIR = "preprocessed_data/"      # Output location
+TRAIN_RATIO = 0.7                      # Training set size
+VAL_RATIO = 0.15                       # Validation set size
+TEST_RATIO = 0.15                      # Test set size
 ```
 
 **3. Run the Pipeline**
