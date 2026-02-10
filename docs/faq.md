@@ -633,6 +633,19 @@ For more troubleshooting, see the [Troubleshooting Guide](troubleshooting.md).
 
 ---
 
+## Try the Interactive Demo
+
+🚀 **[PCE Predictor on Kaggle](https://www.kaggle.com/code/omrjad/pce-predictor)**
+
+Experiment with the model in an interactive Jupyter notebook:
+- No installation required
+- Free GPU access
+- Run predictions on custom molecules
+- Visualize model performance
+- Learn from commented code
+
+---
+
 ## Still Have Questions?
 
 - 📘 [User Manual](user-manual.md) - Comprehensive technical documentation

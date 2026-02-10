@@ -397,10 +397,25 @@ echo 'export OPV_DATA_PATH="/path/to/your/data"' >> ~/.bashrc
 
 ---
 
+## Alternative: Try Kaggle Without Installation
+
+If you want to try the model without local installation:
+
+**PCE Predictor on Kaggle**: [https://www.kaggle.com/code/omrjad/pce-predictor](https://www.kaggle.com/code/omrjad/pce-predictor)
+
+- No installation required
+- Free GPU access
+- Pre-configured environment
+- Interactive notebook interface
+- Click "Copy & Edit" to run your own experiments
+
+---
+
 ## Next Steps
 
 ✅ **Installation Complete!**
 
+- Try the [Kaggle Demo](https://www.kaggle.com/code/omrjad/pce-predictor) for a quick interactive experience
 - Proceed to the [User Guide](user-guide.md) for a quick start tutorial
 - Read the [User Manual](user-manual.md) for detailed technical information
 - Check the [FAQ](faq.md) if you have questions

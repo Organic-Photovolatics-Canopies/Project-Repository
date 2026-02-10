@@ -89,6 +89,7 @@ This file tracks documentation updates that need to be made as the project devel
 - [x] Updated FAQ
 - [x] Updated troubleshooting guide
 - [x] Root README.md documentation section updated
+- [x] Added Kaggle PCE Predictor notebook references (Feb 10, 2026)
 
 ## How to Use This File
 

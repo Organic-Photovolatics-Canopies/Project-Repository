@@ -13,7 +13,8 @@
 - **[💾 Data Sources](docs/data-sources.md)** - Dataset information
 
 **External Resources:**
-- **Demo**: [HuggingFace/Kaggle Demo](https://huggingface.co/) *(Coming Soon)*
+- **Demo**: [PCE Predictor on Kaggle](https://www.kaggle.com/code/omrjad/pce-predictor) - Interactive notebook
+- **HuggingFace Demo**: *(Coming Soon)*
 - **Primary Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
 
 ---

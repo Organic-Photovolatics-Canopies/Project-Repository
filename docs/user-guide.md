@@ -397,11 +397,30 @@ for i in range(len(molecules)):
 
 ---
 
-### Workflow 4: Using the Web Demo (Coming Soon)
+### Workflow 4: Using the Demo
 
-**Goal**: Get OPV design recommendations through an intuitive web interface.
+**Goal**: Get OPV design recommendations through an interactive interface.
 
-> **Status**: Under development. Demo will be deployed to HuggingFace/Kaggle.
+#### Kaggle Notebook Demo
+
+**Available Now**: [PCE Predictor on Kaggle](https://www.kaggle.com/code/omrjad/pce-predictor)
+
+This interactive Jupyter notebook allows you to:
+- Load and explore the OPV dataset
+- Run preprocessing steps interactively
+- Train GNN models for PCE prediction
+- Make predictions on custom molecules
+- Visualize results and model performance
+
+**How to Use**:
+1. Visit the [Kaggle notebook](https://www.kaggle.com/code/omrjad/pce-predictor)
+2. Click "Copy & Edit" to create your own version
+3. Run cells sequentially to reproduce results
+4. Modify SMILES strings to test your own molecules
+
+#### Web Demo (Coming Soon)
+
+> **Status**: Under development. Full web interface will be deployed to HuggingFace.
 
 #### Planned Features
 
@@ -423,11 +442,11 @@ for i in range(len(molecules)):
 - Compare predicted properties
 - Export results
 
-#### Access (When Available)
+#### Access
 
 ```
-🌐 Web Demo: https://huggingface.co/spaces/omid-usa/opv-predictor
-📊 Kaggle: https://kaggle.com/omidusa/opv-design-tool
+📊 Kaggle Notebook (Available): https://www.kaggle.com/code/omrjad/pce-predictor
+🌐 Web Demo (Coming Soon): https://huggingface.co/spaces/omid-usa/opv-predictor
 ```
 
 ---

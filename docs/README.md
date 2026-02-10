@@ -17,7 +17,8 @@ Welcome to the **OMID USA** (AI-Powered Design of Organic Photovoltaics Canopies
 ## 🚀 Quick Links
 
 ### External Resources
-- **Demo**: [HuggingFace/Kaggle Demo](https://huggingface.co/) *(Coming Soon)*
+- **Demo**: [PCE Predictor on Kaggle](https://www.kaggle.com/code/omrjad/pce-predictor) - Interactive notebook demo
+- **HuggingFace Demo**: *(Coming Soon)*
 - **Primary Dataset**: [OPV2D Dataset](https://github.com/sunyrain/OPV2D)
 - **Repository**: [Project Repository](https://github.com/)
 
@@ -74,10 +75,11 @@ OMID USA is a machine learning research project that leverages advanced Graph Ne
 
 ## 🔍 What's Next?
 
-1. **New Users**: Start with the [Installation Guide](installation.md) to set up your environment
-2. **Quick Start**: Follow the [User Guide](user-guide.md) to run your first preprocessing pipeline
-3. **Deep Dive**: Explore the [User Manual](user-manual.md) for detailed technical information
-4. **Issues**: Check the [FAQ](faq.md) and [Troubleshooting](troubleshooting.md) guides
+1. **Try the Demo**: Check out the [PCE Predictor on Kaggle](https://www.kaggle.com/code/omrjad/pce-predictor) - no installation needed!
+2. **New Users**: Start with the [Installation Guide](installation.md) to set up your environment
+3. **Quick Start**: Follow the [User Guide](user-guide.md) to run your first preprocessing pipeline
+4. **Deep Dive**: Explore the [User Manual](user-manual.md) for detailed technical information
+5. **Issues**: Check the [FAQ](faq.md) and [Troubleshooting](troubleshooting.md) guides
 
 > **📝 Note**: Preprocessing notebooks for OPV2D dataset and documentation images will be added soon. 
 > See [TODO.md](TODO.md) for planned updates.

@@ -794,6 +794,46 @@ Response:
 
 ---
 
+## Example Implementation
+
+### Kaggle PCE Predictor Notebook
+
+**Interactive Demo**: [https://www.kaggle.com/code/omrjad/pce-predictor](https://www.kaggle.com/code/omrjad/pce-predictor)
+
+This notebook demonstrates a complete end-to-end workflow for PCE prediction:
+- Data loading and preprocessing
+- Graph neural network implementation
+- Model training and validation
+- Performance evaluation
+- Interactive prediction interface
+
+**Key Features**:
+- Self-contained Jupyter notebook
+- Reproducible results
+- Commented code for learning
+- GPU acceleration on Kaggle
+- Example predictions with custom molecules
+
+**Usage**:
+```python
+# The notebook includes sections for:
+# 1. Environment setup and imports
+# 2. Data loading from OPV2D
+# 3. SMILES to graph conversion
+# 4. GNN model definition
+# 5. Training loop with early stopping
+# 6. Evaluation metrics (R², RMSE, MAE)
+# 7. Prediction function for new molecules
+```
+
+**To Run**:
+1. Visit the Kaggle notebook link
+2. Click "Copy & Edit" to fork to your account
+3. Enable GPU accelerator (Settings → Accelerator → GPU)
+4. Click "Run All" or execute cells sequentially
+
+---
+
 ## Advanced Usage
 
 ### Custom Feature Engineering
