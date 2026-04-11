@@ -124,6 +124,13 @@ Each member will add their own contributions individually below.
   - Developed a runnable baseline environment for evaluating Hugging Face GNNs on molecular graph inputs. This included:
     - Writing skeleton code to load, configure, and run Graphormer-style models from Hugging Face using PyTorch (`hf_gnn_test.py`).
 
+  - Established technical leadership by architecting the overall ML workflow, defining model selection strategies (PCE prediction → VGAE material generation), and creating comprehensive system design documents for team alignment.
+  - Designed and implemented modular data preprocessing pipelines and model training infrastructure, enabling scalable experimentation and reducing friction for downstream team members.
+  - Developed foundational skeleton code for key components (GNN benchmarking, data processing utilities) to accelerate team development and establish coding standards.
+  - Conducted literature synthesis and technical feasibility studies, synthesizing findings into reports and architecture diagrams that guided critical decisions on graph neural network approaches and dataset enrichment strategies.
+  - Executed advanced data engineering tasks including patent data scraping from Lens.org and other sources to augment the OPV2D dataset with industry-relevant molecular compounds and research trends.
+  - Built evaluation frameworks and documentation standards, ensuring reproducibility and enabling effective knowledge transfer across the interdisciplinary team.
+
 - **Toan Nham:**
   - Work in progress is documented in the `preprocessing/` folder, including:
     - Data preprocessing pipeline for molecular datasets (`pipeline.py`)
